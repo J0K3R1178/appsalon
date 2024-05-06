@@ -3,7 +3,6 @@
     "description": "Proyecto APPSALON",
     "autoload": {
         "psr-4": {
-            "Mendo\\AppSalonPhpMvcJsSass\\": "src/",
             "MVC\\": "./",
             "Controllers\\": "./controllers",
             "Model\\": "./models"

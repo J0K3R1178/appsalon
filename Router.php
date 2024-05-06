@@ -38,10 +38,12 @@ class Router
         }
 
 
-        if ( $fn ) {
+        if ( $fn ) 
+        {
             // Call user fn va a llamar una función cuando no sabemos cual sera
             call_user_func($fn, $this); // This es para pasar argumentos
-        } else {
+        } else 
+        {
             echo "Página No Encontrada o Ruta no válida";
         }
     }
@@ -50,7 +52,8 @@ class Router
     {
 
         // Leer lo que le pasamos  a la vista
-        foreach ($datos as $key => $value) {
+        foreach ($datos as $key => $value) 
+        {
             $$key = $value;  // Doble signo de dolar significa: variable variable, básicamente nuestra variable sigue siendo la original, pero al asignarla a otra no la reescribe, mantiene su valor, de esta forma el nombre de la variable se asigna dinamicamente
         }
 
