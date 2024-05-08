@@ -18,14 +18,14 @@ class LoginController
         echo "Desde Logout";
     }   // Here End Function Logout
 
-    public static function register()
+    public static function register(Router $router)
     {
-        echo "Desde Register";
+        $router->render('auth/register');
     }   // Here End Function Register
 
-    public static function forgotPassword()
+    public static function forgotPassword(Router $router)
     {
-        echo "Desde forgot Password";
+        $router->render('auth/forgotpassword');
     }   // Here End Function forgotPassword
 
     public static function resetPassword()

@@ -16,7 +16,7 @@
     <input type="submit" class="boton" value="Iniciar Sesion" />
 
     <div class="acciones">
-        <a href="/register" class="boton">Registrarse</a>
-        <a href="/forgotPassword" class="boton">Recuperar Contraseña</a>
+        <a href="/register" class="">Registrarse</a>
+        <a href="/forgotPassword" class="">Recuperar Contraseña</a>
     </div>
 </form>
