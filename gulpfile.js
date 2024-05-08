@@ -13,14 +13,16 @@ const cache = require('gulp-cache');
 const clean = require('gulp-clean');
 const webp = require('gulp-webp');
 
-const paths = {
+const paths = 
+{
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
     imagenes: 'src/img/**/*'
 }
 
 // css es una función que se puede llamar automaticamente
-function css() {
+function css() 
+{
     return src(paths.scss)
         .pipe(sourcemaps.init())
         .pipe(sass())
@@ -59,7 +61,7 @@ function watchArchivos() {
     watch( paths.imagenes, imagenes );
     watch( paths.imagenes, versionWebp );
 }
-  
+
 exports.css = css;
 exports.watchArchivos = watchArchivos;
 exports.start = parallel(css, javascript,  imagenes, versionWebp,  watchArchivos ); 

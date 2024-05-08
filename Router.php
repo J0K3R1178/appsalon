@@ -50,7 +50,6 @@ class Router
 
     public function render($view, $datos = [])
     {
-
         // Leer lo que le pasamos  a la vista
         foreach ($datos as $key => $value) 
         {

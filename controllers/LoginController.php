@@ -8,9 +8,9 @@ use MVC\Router;
 
 class LoginController
 {
-    public static function login()
+    public static function login(Router $router)
     {
-        echo "Welcome";
+        $router->render('/auth/login');
     }   // Here End Function Login
 
     public static function logout()
