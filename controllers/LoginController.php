@@ -4,6 +4,8 @@
 namespace Controllers;
 
 // Uses
+
+use Model\Usuario;
 use MVC\Router;
 
 class LoginController
@@ -20,7 +22,26 @@ class LoginController
 
     public static function register(Router $router)
     {
-        $router->render('auth/register');
+        $usuario = new Usuario;
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $usuario->sincronizar($_POST);
+            $alertas = $usuario->validarNuevaCuenta();
+
+            if( empty( $alertas ) )
+            {
+                echo 'ALL GOOD';
+                exit;
+            }   // Here End If
+
+        }   // Here End If
+
+        $router->render('auth/register', 
+        [
+            'usuario' => $usuario,
+            'alertas' => $alertas
+        ]);
     }   // Here End Function Register
 
     public static function forgotPassword(Router $router)

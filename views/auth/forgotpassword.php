@@ -4,7 +4,7 @@
 <form action="/forgotPassword" method="post" class="formulario">
     <div class="campo">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="Email" required>
+        <input type="email" name="email" id="email" placeholder="Tu Email" required>
     </div>
 
     <input type="submit" class="boton" value="Enviar Instrucciones">
