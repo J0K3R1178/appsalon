@@ -6,7 +6,7 @@ class Usuario extends ActiveRecord
 {
     // Database
     protected static $tabla = 'usuarios';
-    protected static $columnasDB = array('id', 'nombre', 'apellido', 'email', 'telefono', 'admin', 'confirmado', 'token', 'password');
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'email', 'telefono', 'admin', 'confirmado', 'token', 'password'];
 
     public $id;
     public $nombre;
@@ -25,8 +25,8 @@ class Usuario extends ActiveRecord
         $this->apellido = $args['apellido'] ?? '';
         $this->email = $args['email'] ?? '';
         $this->telefono = $args['telefono'] ?? '';
-        $this->admin = $args['admin'] ?? null;
-        $this->confirmado = $args['confirmado'] ?? null;
+        $this->admin = $args['admin'] ?? '0';
+        $this->confirmado = $args['confirmado'] ?? '0';
         $this->token = $args['token'] ?? '';
         $this->password = $args['password'] ?? '';
     }   // Here End Construct

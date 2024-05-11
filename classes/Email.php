@@ -43,14 +43,7 @@ class Email
         $contenido .= '</html>';
         $mail->Body = $contenido;
 
-        // Send Email
-        if ($mail->send() ) 
-        {
-            return true;
-        } else 
-        {
-            return false;
-        }   // Here End If Else
+        $mail->send();
     }   // Here End Enviar Confirmacion
 
 }   // Here End Class Email

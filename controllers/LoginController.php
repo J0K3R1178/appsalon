@@ -37,7 +37,7 @@ class LoginController
                 if($resultado->num_rows)
                 {
                     $alertas = Usuario::getAlertas();
-                }
+                }   // Here End If
                 else
                 {
                     // Hash Password
@@ -47,8 +47,15 @@ class LoginController
                     $usuario->crearToken();
 
                     $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-                    showValues($email);
-                }
+                    $email->enviarConfirmacion();
+
+                    $resultado = $usuario->guardar();
+
+                    if($resultado)
+                    {
+                        header('Location: /message');
+                    }   // Here End If
+                }   // Here End Else
             }   // Here End If
 
         }   // Here End If
@@ -69,6 +76,16 @@ class LoginController
     {
         echo "Desde Reset Password";
     }   // Here End Function Reset Password
+
+    public static function confirmAccount(Router $router)
+    {
+        echo "Desde Confirm Account";
+    }   // Here End Function Confirm Account
+
+    public static function message(Router $router)
+    {
+        $router->render('auth/message');
+    }   // Here End Function Message
 
 }   // Here End Class LoginController
 
