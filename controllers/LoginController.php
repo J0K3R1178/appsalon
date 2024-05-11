@@ -5,6 +5,7 @@ namespace Controllers;
 
 // Uses
 
+use Classes\Email;
 use Model\Usuario;
 use MVC\Router;
 
@@ -31,8 +32,23 @@ class LoginController
 
             if( empty( $alertas ) )
             {
-                echo 'ALL GOOD';
-                exit;
+                $resultado = $usuario->existeUsuario();
+
+                if($resultado->num_rows)
+                {
+                    $alertas = Usuario::getAlertas();
+                }
+                else
+                {
+                    // Hash Password
+                    $usuario->hashPassword();
+
+                    // Create a Unique Token
+                    $usuario->crearToken();
+
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    showValues($email);
+                }
             }   // Here End If
 
         }   // Here End If

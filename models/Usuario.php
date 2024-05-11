@@ -5,7 +5,7 @@ namespace Model;
 class Usuario extends ActiveRecord
 {
     // Database
-    protected static $tabla = 'usuario';
+    protected static $tabla = 'usuarios';
     protected static $columnasDB = array('id', 'nombre', 'apellido', 'email', 'telefono', 'admin', 'confirmado', 'token', 'password');
 
     public $id;
@@ -65,6 +65,30 @@ class Usuario extends ActiveRecord
         return self::$alertas;
 
     }   // Here End Function Validar Nueva Cuenta
+
+    public function existeUsuario()
+    {
+        $query = 'SELECT * FROM ' . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
+        $resultado = self::$db->query($query);
+        
+        if( $resultado->num_rows)
+        {
+            self::$alertas['error'][] = 'El Usuario Ya Esta Registrado';
+        }   // Here End If
+
+        return $resultado;
+
+    }   // Here End Function Existe Usuario
+
+    public function hashPassword()
+    {
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    }   // Here End Function Hash Password
+
+    public function crearToken()
+    {
+        $this->token = uniqid();
+    }   // Here End Function Crear Token
 
 }   // Here End Class Usuario
 
