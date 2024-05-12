@@ -13,7 +13,59 @@ class LoginController
 {
     public static function login(Router $router)
     {
-        $router->render('/auth/login');
+        $alertas = [];
+
+        $auth = new Usuario();
+
+        if( $_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $auth = new Usuario($_POST);
+            $alertas = $auth->validarLogin();
+
+            if( empty($alertas) )
+            {
+                // Check If The User Exist
+                $usuario = Usuario::where('email', $auth->email);
+
+                if( $usuario )
+                {
+                    // Check if The Password is Good
+                    if( $usuario->comprobarPasswordAndVerificado($auth->password) )
+                    {
+                        session_start();
+
+                        $_SESSION['id'] = $usuario->id;
+                        $_SESSION['nombre'] = $usuario->nombre . ' ' . $usuario->apellido;
+                        $_SESSION['email'] = $usuario->email;
+                        $_SESSION['login'] = true;
+
+                        if($usuario->admin === '1')
+                        {
+                            $_SESSION['admin'] = $usuario->admin ?? null;
+                            header('location: /admin');
+                        }   // Here End If
+                        else
+                        {
+                            header('Location: /cita');
+                        }
+                        showValues( $_SESSION);
+                    }   // Here End If
+
+                }   // Here End If
+                else
+                {
+                    Usuario::setAlerta('error', 'Usuario No Encontrado');
+                }   // Here End Else    
+            }   // Here End If
+
+            $alertas = Usuario::getAlertas();
+
+        }   // Here End If
+        $router->render('/auth/login', 
+        [
+            'alertas' => $alertas,
+            'auth' => $auth
+        ]);
     }   // Here End Function Login
 
     public static function logout()
@@ -69,7 +121,39 @@ class LoginController
 
     public static function forgotPassword(Router $router)
     {
-        $router->render('auth/forgotpassword');
+        $alertas = [];
+
+        if( $_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $auth = new Usuario($_POST);
+            $alertas = $auth->validarEmail();
+            
+            if( empty( $alertas ) )
+            {
+                $usuario = Usuario::where('email', $auth->email);
+
+                if( $usuario && $usuario->confirmado === '1')
+                {
+                    // Create A Token
+                    $usuario->crearToken();
+                    $usuario->guardar();
+
+                    // TODO:
+                    Usuario::setAlerta('exito', 'Revisa tu Email');
+                }   // Here End If
+                else
+                {
+                    Usuario::setAlerta('error', 'El Usuario No Existe o No Esta Confirmado');
+                }   // Here End Else
+            }   // Here End If
+        }   // Here End If
+
+        $alertas = Usuario::getAlertas();
+
+        $router->render('auth/forgotpassword', 
+        [
+            'alertas' => $alertas
+        ]);
     }   // Here End Function forgotPassword
 
     public static function resetPassword()
@@ -79,7 +163,33 @@ class LoginController
 
     public static function confirmAccount(Router $router)
     {
-        echo "Desde Confirm Account";
+        $alertas = [];
+
+        $token = s( $_GET['token'] );
+
+        $usuario = Usuario::where('token', $token);
+
+        if( empty( $usuario ) )
+        {
+            $alertas = Usuario::setAlerta('error', 'Token No Valido');
+        }   // Here End If
+        else
+        {
+            $usuario->confirmado = 1;
+            $usuario->token = null;
+            $usuario->guardar();
+            Usuario::setAlerta('exito', 'Cuenta Confirmada Correctamente');
+
+
+
+        }   // Here End Else
+
+        $alertas = Usuario::getAlertas();
+
+        $router->render('auth/confirmaccount', 
+        [
+            'alertas' => $alertas
+        ]);
     }   // Here End Function Confirm Account
 
     public static function message(Router $router)

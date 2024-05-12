@@ -1,11 +1,17 @@
 <h1 class="nombre-pagina">Login</h1>
 <h4 class="descripcion-pagina">Inicia Sesion con tus Datos</h4>
 
+<?php
+
+    include_once __DIR__. '/../template/alertas.php';
+
+?>
+
 <form action="/" class="formulario" method="POST">
     
     <div class="campo">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="Tu Email" required />
+        <input type="email" name="email" id="email" placeholder="Tu Email" value="<?php echo s($auth->email); ?>" required />
     </div>
 
     <div class="campo">
