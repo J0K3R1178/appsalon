@@ -13,6 +13,9 @@ $router->get('/logout', [LoginController::class, 'logout']);
 $router->get('/register', [LoginController::class,'register']);
 $router->get('/forgotPassword', [LoginController::class,'forgotPassword']);
 $router->get('/resetPassword', [LoginController::class, 'resetPassword']);
+$router->get('/confirmAccount', [LoginController::class, 'confirmAccount']);
+$router->get('/message', [LoginController::class, 'message']);
+
 
 // Post Routes Login Controller
 $router->post('/', [LoginController::class, 'login']);
