@@ -138,6 +138,10 @@ class LoginController
                     $usuario->crearToken();
                     $usuario->guardar();
 
+                    // Send Email
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    $email->enviarInstrucciones();
+
                     // TODO:
                     Usuario::setAlerta('exito', 'Revisa tu Email');
                 }   // Here End If
@@ -156,9 +160,48 @@ class LoginController
         ]);
     }   // Here End Function forgotPassword
 
-    public static function resetPassword()
+    public static function resetPassword( Router $router)
     {
-        echo "Desde Reset Password";
+        $alertas = [];
+        $error = false;
+
+        $token = s( $_GET['token'] );
+
+        $usuario = Usuario::where('token', $token);
+
+        if( empty( $usuario ) )
+        {
+            Usuario::setAlerta('error', 'Token No Valido');
+            $error = true;
+        }   // Here End If
+
+        if( $_SERVER['REQUEST_METHOD'] == 'POST' )
+        {
+            // Read New Password and Save It
+            $password = new Usuario($_POST);
+            $alertas = $password->validarPassword();
+        }   // Here End If
+
+        if( empty( $alertas ) )
+        {
+            $usuario->password = null;
+            $usuario->password = $password->password;
+            $usuario->hashPassword();
+            $usuario->token = null;
+            $resultado = $usuario->guardar();
+            if( $resultado )
+            {
+                header('Location: /');
+            } // Here End If
+        }   // Here End If
+
+        $alertas = Usuario::getAlertas();
+
+        $router->render('auth/resetPassword', 
+        [
+            'alertas'=> $alertas,
+            'error' => $error
+        ]);
     }   // Here End Function Reset Password
 
     public static function confirmAccount(Router $router)
@@ -179,9 +222,6 @@ class LoginController
             $usuario->token = null;
             $usuario->guardar();
             Usuario::setAlerta('exito', 'Cuenta Confirmada Correctamente');
-
-
-
         }   // Here End Else
 
         $alertas = Usuario::getAlertas();

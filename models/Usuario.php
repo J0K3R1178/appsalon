@@ -129,6 +129,20 @@ class Usuario extends ActiveRecord
         }   // Here End Else 
     }   // Here End Function Comprobar Password Verificado
 
+    public function validarPassword()
+    {
+        if( !$this->password)
+        {
+            self::$alertas['error'][] = 'La Contraseña Es Obligatoria';
+        }   // Here End If
+        elseif( strlen( $this->password ) < 6)
+        {
+            self::$alertas['error'][] = 'La Contraseña Debe Tener Al Menos 6 Caracteres';
+        }   // Here End Else
+
+        return self::$alertas;
+    }   // Here End Function Validar Password
+
 }   // Here End Class Usuario
 
 
