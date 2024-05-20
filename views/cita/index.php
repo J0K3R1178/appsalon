@@ -25,7 +25,7 @@
 
             <div class="campo">
                 <label for="fecha">Fecha</label>
-                <input type="date" id="fecha" name="fecha">
+                <input type="date" id="fecha" name="fecha" min="<?php echo date('Y-m-d'); ?>">
             </div>
 
             <div class="campo">
