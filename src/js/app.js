@@ -36,6 +36,9 @@ function iniciarApp()
 
     // Add The Date of Client to Object Cita
     seleccionarFecha();
+
+    // Add the Hour of Client to Object Cita
+    seleccionarHora();
 }   // Here End Function Iniciar App
 
 function tabs()
@@ -241,3 +244,22 @@ function mostrarAlerta( mensaje, tipo )
         alerta.remove();
     }, 3000);
 }   // Here End Function Mostrar Alerta
+
+function seleccionarHora()
+{
+    const inputHora = document.querySelector( '#hora' );
+    inputHora.addEventListener('input', function(e) 
+    {
+        const horaCita = e.target.value;
+        const hora = horaCita.split(':')[0];
+        if( hora<10 || hora>18)
+            {
+                e.target.value = '';
+                mostrarAlerta('Hora No Valida','error');
+            }   // Here End If
+            else
+            {
+                cita.hora = e.target.value;
+            }   // Here End Else
+    }); // Here End Event
+}   // Here End Function Seleccionar Hora
