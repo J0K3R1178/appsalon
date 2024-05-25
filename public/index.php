@@ -24,6 +24,9 @@ $router->get('/cita', [CitaController::class,'index']);
 //  Get Routes Api de Citas 
 $router->get('/api/servicios', [APIController::class,'index']);
 
+// Post Routes Api de Citas
+$router->post('/api/citas', [APIController::class,'guardar']);
+
 
 // Post Routes Login Controller
 $router->post('/', [LoginController::class, 'login']);
