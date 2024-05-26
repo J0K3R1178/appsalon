@@ -4,6 +4,7 @@ const pasoFinal = 3;
 
 const cita = 
 {
+    id: '',
     nombre: '',
     fecha: '',
     hora: '',
@@ -33,6 +34,8 @@ function iniciarApp()
 
     // Add The Name of Client to Object Cita
     nombreCliente();
+
+    idCliente();
 
     // Add The Date of Client to Object Cita
     seleccionarFecha();
@@ -352,28 +355,62 @@ function mostrarResumen()
     resumen.appendChild(botonReservar);
 }   // Here End Function Mostrar Resumen
 
-async function reservarCita()
-{
-    const { nombre, fecha, hora, servicios } = cita;
+
+async function reservarCita() {
+    
+    const { nombre, fecha, hora, servicios, id } = cita;
+
     const idServicios = servicios.map( servicio => servicio.id );
+    // console.log(idServicios);
+
     const datos = new FormData();
-    datos.append('nombre',nombre);
+    
     datos.append('fecha', fecha);
-    datos.append('hora',hora);
+    datos.append('hora', hora );
+    datos.append('usuarioid', id);
     datos.append('servicios', idServicios);
 
-    // Petition towards API
-    const url = 'https://localhost:3000/api/citas';
+    console.log([...datos]);
 
-    const respuesta = await fetch( url, 
+    try {
+        // Petición hacia la api
+        const url = 'http://localhost:3000/api/citas'
+        const respuesta = await fetch(url, 
         {
             method: 'POST',
             body: datos
         });
 
-    const resultado = await respuesta.json();
-    
+        const resultado = await respuesta.json();
+        
+        console.log(resultado);
+        
+        if(resultado.resultado) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Cita Creada',
+                text: 'Tu cita fue creada correctamente',
+                button: 'OK'
+            }).then( () => {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            })
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un error al guardar la cita'
+        })
+    }
 
+    
     // console.log([...datos]);
 
-}   // Here End Function Reservar Cita
+}
+
+function idCliente()
+{
+    cita.id = document.querySelector('#id').value;
+}   // Here End Function Id Cliente

@@ -36,7 +36,5 @@ $router->post('/resetPassword', [LoginController::class, 'resetPassword']);
 
 
 
-
-
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
