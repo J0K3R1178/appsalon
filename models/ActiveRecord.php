@@ -118,7 +118,7 @@ class ActiveRecord {
 
     // Obtener Registros con cierta cantidad
     public static function get($limite) {
-        $query = "SELECT * FROM " . static::$tabla . " LIMIT ${limite}";
+        $query = "SELECT * FROM " . static::$tabla . " LIMIT {$limite}";
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado ) ;
     }
@@ -130,7 +130,8 @@ class ActiveRecord {
     }
 
     // crea un nuevo registro
-    public function crear() {
+    public function crear() 
+    {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
 
