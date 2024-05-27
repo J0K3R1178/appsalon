@@ -13,3 +13,12 @@ function s($html) : string {
     $s = htmlspecialchars($html);
     return $s;
 }
+
+// Check if the User is Authenticated
+function isAuth()
+{
+    if( !isset( $_SESSION['login']  ) )
+    {
+        header('Location: /');
+    }   // Here End If
+}   // Here End Function IsAuth
