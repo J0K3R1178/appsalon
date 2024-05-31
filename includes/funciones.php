@@ -22,3 +22,13 @@ function isAuth()
         header('Location: /');
     }   // Here End If
 }   // Here End Function IsAuth
+
+function esUltimo( string $actual, string $proximo): bool
+{
+    if( $actual !== $proximo)
+    {
+        return true;
+    }   // Here End If
+
+    return false;
+}   // Here End Function EsUltimo
