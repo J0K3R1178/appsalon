@@ -32,3 +32,16 @@ function esUltimo( string $actual, string $proximo): bool
 
     return false;
 }   // Here End Function EsUltimo
+
+function isAdmin()
+{
+    if( !isset( $_SESSION['login']  ) )
+    {
+        header('Location: /');
+    }   // Here End If
+
+    if( !isset( $_SESSION['admin'] ) )
+    {
+        header('Location: /');
+    }
+}   // Here End Function Is Admin
