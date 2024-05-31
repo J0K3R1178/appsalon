@@ -22,3 +22,26 @@ function isAuth()
         header('Location: /');
     }   // Here End If
 }   // Here End Function IsAuth
+
+function esUltimo( string $actual, string $proximo): bool
+{
+    if( $actual !== $proximo)
+    {
+        return true;
+    }   // Here End If
+
+    return false;
+}   // Here End Function EsUltimo
+
+function isAdmin()
+{
+    if( !isset( $_SESSION['login']  ) )
+    {
+        header('Location: /');
+    }   // Here End If
+
+    if( !isset( $_SESSION['admin'] ) )
+    {
+        header('Location: /');
+    }
+}   // Here End Function Is Admin
