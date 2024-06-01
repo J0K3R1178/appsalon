@@ -2,6 +2,7 @@
 <h4 class="descripcion-pagina">LLena Todos Los Campos para Agregar un Nuevo Servicio</h4>
 <?php
     include_once __DIR__ . "/../template/barra.php";
+    include_once __DIR__ . "/../template/alertas.php";
 
 ?>
 

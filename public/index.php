@@ -49,9 +49,9 @@ $router->post('/forgotPassword', [LoginController::class, 'forgotPassword']);
 $router->post('/resetPassword', [LoginController::class, 'resetPassword']);
 
 // Post Routes Servicio Controller
-$router->post('/servicio/crear', [ServicioController::class,'create']);
-$router->post('/servicio/actualizar', [ServicioController::class,'update']);
-$router->post('/servicio/eliminar', [ServicioController::class,'delete']);
+$router->post('/servicios/crear', [ServicioController::class,'create']);
+$router->post('/servicios/actualizar', [ServicioController::class,'update']);
+$router->post('/servicios/eliminar', [ServicioController::class,'delete']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
